@@ -1,5 +1,5 @@
 # Data Product Studio 
-### An Apache 2, open-source license collaboration tool that walks teams through a simple process to create data products.
+### An [Apache 2](https://www.apache.org/licenses/LICENSE-2.0), open-source license collaboration tool that walks teams through a simple process to create data products.
 
 Why the Data Product Studio was needed:
 - Teams operate in silos, leading to poor data management. Garbage in, garbage out

@@ -9,6 +9,8 @@ Why the Data Product Studio was needed:
 - Clarkston wants to help our clients have better data management and we want to make it as easy and low-risk as possible for them to see results
 - The Data, Digital, and Analytics team is passionate about contributing to open source software
 
+![Home.png](https://github.com/data-product-studio/data-product-studio#:~:text=1%20minute%20ago-,Home.png,-Add%20files%20via)
+
 <!--
 **data-product-studio/data-product-studio** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 

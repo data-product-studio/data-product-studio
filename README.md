@@ -15,7 +15,7 @@ Why the Data Product Studio was needed:
 ![Logic](https://github.com/data-product-studio/data-product-studio/blob/main/Logic.png)
 ![Visuals](https://github.com/data-product-studio/data-product-studio/blob/main/Visuals.png)
 ![API](https://github.com/data-product-studio/data-product-studio/blob/main/API.png)
-![data sources](https://github.com/data-product-studio/data-product-studio/blob/main/data sources.png)
+![data_sources](https://github.com/data-product-studio/data-product-studio/blob/main/data_sources.png)
 
 
 <!--

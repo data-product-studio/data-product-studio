@@ -9,7 +9,7 @@ Why the Data Product Studio was needed:
 - Clarkston wants to help our clients have better data management and we want to make it as easy and low-risk as possible for them to see results
 - The Data, Digital, and Analytics team is passionate about contributing to open source software
 
-### The home page enables you to search for any entities used by your data, software, and analyst teams. On the left are the steps your teams will take to ensure high-quality data products and prevent and/or eliminate a lot of issues we see that arise from poor data management
+### The Projects page enables you to search for any entities used by your data, software, and analyst teams. On the left are the steps your teams will take to ensure high-quality data products and prevent and/or eliminate a lot of issues we see that arise from poor data management
 ![Home](https://github.com/data-product-studio/data-product-studio/blob/main/Home.png)
 
 ### Searching for entities is greatly aided when someone can add a context filter to the search. A data scientists might need taxonomy or database result, whereas a business analyst might need business logic design

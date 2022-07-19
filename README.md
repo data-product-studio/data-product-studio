@@ -12,13 +12,13 @@ Why the Data Product Studio was needed:
 ### The Projects page enables you to search for any entities used by your data, software, and analyst teams. On the left are the steps your teams will take to ensure high-quality data products and prevent and/or eliminate a lot of issues we see that arise from poor data management
 ![Home](https://github.com/data-product-studio/data-product-studio/blob/main/Home.png)
 
-### Searching for entities is greatly aided when someone can add a context filter to the search. A data scientists might need taxonomy or database result, whereas a business analyst might need business logic design
+### Searching for entities is greatly aided when someone can add a context filter to the search. A data scientist might need taxonomy or database contextual results, whereas a business analyst might need business logic design. 
 ![Search](https://github.com/data-product-studio/data-product-studio/blob/main/search.png)
 
 ### The first step is for a data product manager / business domain owner to list the objective and key results for their data product (or an Epic & user stories if preferred). Every person / team involved with creating a data product needs to get on the same page. The goal of the Objectives page is to facilitate communication, NOT to merely create tickets.
 ![Objectives](https://github.com/data-product-studio/data-product-studio/blob/main/Objectives.png)
 
-### It is the job of the business analyst to convert the business domain owner's needs into psuedo code or even actual code that can be executed.
+### It is the job of the business analyst to convert the business domain owner's needs into psuedo code or even actual code that can be executed. This experience is meant to create collaborative communication, to ensure everyone agrees in theory to how things are represented properly.
 ![Logic](https://github.com/data-product-studio/data-product-studio/blob/main/Logic.png)
 ![Visuals](https://github.com/data-product-studio/data-product-studio/blob/main/Visuals.png)
 ![API](https://github.com/data-product-studio/data-product-studio/blob/main/API.png)

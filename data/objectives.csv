@@ -1,3 +1,9 @@
 Key Results,Status,Created,ID
 This is my first Key Result,Not Yet Started,2022-07-20,1
 This is another one,Not Yet Started,2022-07-20,2
+As a DBA I want to view the tables to calculate employee Tenure,Not Yet Started,2022-07-07,3
+,Not Yet Started,2022-07-20,4
+fref,Started,2022-07-08,5
+,Not Yet Started,2022-07-20,6
+abc,Started,2022-07-20,7
+fgh,Not Yet Started,2022-07-20,8

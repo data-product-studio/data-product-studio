@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+from datetime import datetime
+import math
 st.title("Objectives")
 "### This page is in progress."
 
@@ -8,7 +11,7 @@ status = st.selectbox("\n\nObjective:", ["Calculate Employee Tenure"])
 
 # open Existing Objectives file and display
 df = pd.read_csv("data/objectives.csv")
-st.dataframe(df)
+sldf = st.dataframe(df)
 
 # form to collect new data
 with st.form("objectives_form",clear_on_submit = True ):
@@ -26,3 +29,5 @@ with st.form("objectives_form",clear_on_submit = True ):
         st.write(new_data)
         df = df.append(new_data, ignore_index = True)
         df.to_csv("data/objectives.csv", index=False)
+        # reruns the script to result form and update table
+        st.experimental_rerun()

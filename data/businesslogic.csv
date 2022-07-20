@@ -1,0 +1,11 @@
+Step,Written Logic,Pseudo Code,TaxonomyName,TaxonomyLink
+1,"For each current Employee, calculate Tenure (Todays Date -  hireDate) in daysand add together ","totalTenure = 0
+for each employee in Employees:
+	employeeTenure = sys.Today - employee.hireDate
+	totalTenure = totalTenure + employeeTenure ",Tenure,www.signalsCOMPANYXYZ.com/Tenure
+2,Divide total Tenure by total number of employyees,"numEmployees = count(employees) // See documentation for correct total employees calculation
+
+
+avgTenure = totalTenure/numEmployees",Total Employees,www.signalsCOMPANYXYZ.com/TotalEmployees
+3,Divide average tenure by 365 (to estimate tenure in years) ,"avgTenureYear = round((avgTenure/365), 2) // divide average tenure by 365 and round to two decimals ",,
+4,return result,return avgTenureYear,,

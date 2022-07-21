@@ -26,8 +26,9 @@ with st.form("objectives_form",clear_on_submit = True ):
         # caclulate next ID
         id = 1 if math.isnan(df["ID"].max()) else df["ID"].max()+1
         new_data = {'Key Results':key_res, "Status":status, "Created":created_date, "ID": id}
-        st.write(new_data)
+        # append new data to df
         df = df.append(new_data, ignore_index = True)
+
         df.to_csv("data/objectives.csv", index=False)
         # reruns the script to result form and update table
         st.experimental_rerun()

@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import math
 st.title("Objectives")
-"### This page is in progress."
+
 
 
 status = st.selectbox("\n\nObjective:", ["Calculate Employee Tenure"])

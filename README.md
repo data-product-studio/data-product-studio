@@ -1,5 +1,5 @@
 # Clarkston Consulting's Data Product Studio
-## An Open-Source Data Product Management & Data Experience Methodology Tool
+## An Open-Source Data Product Management & Data Experience Tool
 ### You have talent in place, now let’s unleash it with a step-by-step product management methodology that simplifies your systems and workflows to unlock value
 ![image](https://user-images.githubusercontent.com/109617268/186959649-250ce2a6-a86c-4818-b21c-165a3b9fa1b7.png)
 Our mission is to help your teams create, collaborate, and communicate better.

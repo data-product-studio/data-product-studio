@@ -57,11 +57,10 @@ When we define data visualizations we need to specificy any code sources (if Jav
 ## 10. QUALITY CONTROL & TESTING
 ### How will your team reflect on the value of KPIs, how will things be tested before being released into production, and are there ways to detect data corruption? How can future members of the team hold a retrospective and connect the dots?
 
-## DATA PRODUCT MANAGEMENT WILL MITIGATE AND PREVENT SOME OF YOUR GREATEST PAIN POINTS IN DATA.FOLLOW THESE STEPS FOR HIGH QUALITY DATA PRODUCTS AND EFFECTIVE DATA TEAMS
 
 ### Please reach out if you’d like to learn more about how Clarkston Consulting can coach your teams on Data Product methodologies. We can show your teams how to integrate Clarkston’s Data Product Management methodology to complement and support better Agile processes.
 
-
+# Additional Features:
 ## CONTEXTUAL SEARCH
 ### Searching for entities is greatly aided when someone can add a context filter to the search. A data scientist might need taxonomy or database contextual results, whereas a business analyst might need business logic design.
 ![Search](https://github.com/data-product-studio/data-product-studio/blob/main/images/search.png)

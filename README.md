@@ -1,4 +1,4 @@
-# Data Product Studio
+# The Data Product Studio: A Methodology For Data Product Management & Data Experience Design
 ## An [Apache 2](https://www.apache.org/licenses/LICENSE-2.0), open-source tool that walks teams through a simple step-by-step methodology to create data products and data experiences that will simplify your systems and workflows to unlock value. Our mission is to help your teams create, collaborate, and communicate better.
 
 ![Methodology](https://github.com/data-product-studio/data-product-studio/blob/main/images/Data_Product_Methodology.png)

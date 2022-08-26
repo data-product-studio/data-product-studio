@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 st.title("Visualization")
 
 """
-##### The *Average Employee Tenure* KPI is found in the following locations:
+The *Average Employee Tenure* KPI is found in the following locations:
 - [Tableau SampleHRDashboard](https://public.tableau.com/app/profile/stephanie8603/viz/SampleHRDashboard/Dashboard1)
 
 """

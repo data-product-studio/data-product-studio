@@ -1,5 +1,5 @@
 # Data Product Studio
-## An [Apache 2](https://www.apache.org/licenses/LICENSE-2.0), open-source tool that walks teams through a simple step-by-step process to create data products more efficiently and protect data management quality. Our mission is to help your teams create, collaborate, and communicate better.
+## An [Apache 2](https://www.apache.org/licenses/LICENSE-2.0), open-source tool that walks teams through a simple step-by-step methodology to create data products and data experiences that will simplify your systems and workflows to unlock value. Our mission is to help your teams create, collaborate, and communicate better.
 
 ![Methodology](https://github.com/data-product-studio/data-product-studio/blob/main/images/Data_Product_Methodology.png)
 
@@ -11,7 +11,9 @@ Why the Data Product Studio was needed:
 - Clarkston wants to help our clients have better data management and we want to make it as easy and low-risk as possible for them to see results
 - The Data, Digital, and Analytics team is passionate about contributing to open source software
 
-### The Projects page enables you to search for any entities used by your data, software, and analyst teams. On the left are the steps your teams will take to ensure high-quality data products and prevent and/or eliminate a lot of issues we see that arise from poor data management.
+### DATA PRODUCT MANAGEMENT
+## Setting objectives that create business value,  performance reviews of systems and their efficiencies, understanding our users of data (internal and/or external)
+
 ![Home](https://github.com/data-product-studio/data-product-studio/blob/main/images/Home.png)
 
 ### Searching for entities is greatly aided when someone can add a context filter to the search. A data scientist might need taxonomy or database contextual results, whereas a business analyst might need business logic design.

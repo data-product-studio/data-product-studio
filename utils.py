@@ -53,8 +53,7 @@ def exectute_query_with_results(query, conn):
         return cur.fetchall()
 
 # get the cursor description from a given table, includes column names, datatype
-@st.experimental_memo(ttl=600)
-def get_table_metadata(table):
+def get_table_metadata(table, conn):
     query = "SELECT * FROM {table} LIMIT 1".format(table = table)
 
     with conn.cursor() as cur:
@@ -64,3 +63,16 @@ def get_table_metadata(table):
         except Exception as err:
             cur.connection.rollback()
         return cur.description
+
+
+
+# Check for Global session state and respond with correct message
+def update_message_slot(slot):
+    if not st.session_state["Global Project"]:
+        # TODO MAKE THIS A RELATIVE LINK
+        slot.error("You must select a project. See [GETTING STARTED](http://localhost:8501/#getting-started-with-the-data-product-studio)")
+    elif st.session_state["Global Project"] and st.session_state["Global Objective"]:
+        slot.warning("Current Project: {proj} \n\n Current Objective: {obj}".format(proj = st.session_state["Global Project"], obj = st.session_state["Global Objective"]))
+    else:
+        slot.warning("Current Project: {proj}".format(proj = st.session_state["Global Project"]))
+    return

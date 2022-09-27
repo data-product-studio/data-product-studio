@@ -78,3 +78,57 @@ with st.form("project_form"):
 #             VALUES ('{project_name}');".format(objective_name = objective_name)
 #             execute_query(q, conn)
 #             st.experimental_rerun()
+# initalize session states
+if 'Global Project' not in st.session_state:
+    st.session_state['Global Project'] = False
+
+if 'Global Objective' not in st.session_state:
+    st.session_state['Global Objective'] = False
+
+# Session state allows us to control the state of buttons and warning when page re reruns
+# must initialize them all
+if 'Add an Objective' not in st.session_state:
+    st.session_state['Add an Objective'] = False
+if 'Edit Objective' not in st.session_state:
+    st.session_state['Edit Objective'] = False
+if 'Delete Objective' not in st.session_state:
+    st.session_state['Delete Objective'] = False
+
+
+# flags to display after a add/edit/delete action is completed
+if 'Objective Submitted' not in st.session_state:
+    st.session_state['Objective Submitted'] = False
+if "Objective Edit Confirm" not in st.session_state:
+    st.session_state['Objective Edit Confirm'] = False
+if "Objective Delete Cancelled" not in st.session_state:
+    st.session_state['Objective Delete Cancelled'] = False
+if "Objective Delete Confirm" not in st.session_state:
+    st.session_state['Objective Delete Confirm'] = False
+
+# functions to set the state on button Click
+# this alllows use to switch between buttons without saving the state of the other buttons
+# Ex., If we opened "Add a Project" it will not close untill "st.session_state['Add a Project']" is set to False
+# So, on click of the other buttons we need to update the state
+def set_objective_add_button():
+    st.session_state['Add an Objective'] = not st.session_state['Add an Objective']
+    st.session_state['Edit Objective'] = False
+    st.session_state['Delete Objective'] = False
+
+def set_objective_edit_button():
+    st.session_state['Add an Objective'] = False
+    st.session_state['Edit Objective'] = not st.session_state['Edit Objective']
+    st.session_state['Delete Objective'] = False
+
+def set_objective_delete_button():
+    st.session_state['Add an Objective'] = False
+    st.session_state['Edit Objective'] = False
+    st.session_state['Delete Objective'] = not st.session_state['Delete Objective']
+
+def reset_objective_state():
+    st.session_state['Add an Objective'] = False
+    st.session_state['Edit Objective'] = False
+    st.session_state['Delete Objective'] = False
+
+
+
+

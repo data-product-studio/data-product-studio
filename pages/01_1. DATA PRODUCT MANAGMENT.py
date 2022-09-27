@@ -1,4 +1,4 @@
-############# IMPORTS #############
+########################## IMPORTS ##########################
 import streamlit as st
 import pandas as pd
 from datetime import datetime
@@ -9,10 +9,10 @@ import psycopg2
 sys.path.append('..')
 import utils as ut
 
-############# SET UP #############
+##########################SET UP ##########################
 
 # Call and set up database
-# Initialize connection to postgres table
+# Initialize connection to postgres tabletry:
 try:
     conn = ut.init_connection("dataStudioPostgres")
 except:

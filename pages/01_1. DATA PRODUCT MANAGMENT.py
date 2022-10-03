@@ -287,17 +287,19 @@ if current_project and st.session_state['Global Objective']:
         if not keyResults:
             st.write('You have no Key Results for this objective. Click "Add Key Result"')
         else:
-            st.write(keyResults)
+            df = pd.DataFrame({"Name": keyResult_names, "Status": keyResult_status})
+            st.dataframe(df)
 
         # create add, edit, delete buttons
+        # TODO IMPLIMENT KEY RESULT EDIT AND DELETE
         col1, col2, col3  = st.columns(3)
         with col1:
             add = st.button('Add Key Result', on_click = set_key_result_add_button)
-        if keyResults:
-            with col2:
-                edit = st.button("Edit Key Result", on_click = set_key_result_edit_button)
-            with col3:
-                delete = st.button("Delete Key Result", on_click = set_key_result_delete_button)
+        # if keyResults:
+            # with col2:
+            #     edit = st.button("Edit Key Result", on_click = set_key_result_edit_button)
+            # with col3:
+            #     delete = st.button("Delete Key Result", on_click = set_key_result_delete_button)
 
         if st.session_state['Add a keyResult']:
             with st.form("keyResult_form"):

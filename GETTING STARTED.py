@@ -17,13 +17,6 @@ project = ut.exectute_query_with_results("SELECT * FROM project", conn)
 
 # Session state allows us to control the state of buttons and warning when page re reruns
 # must initialize them all
-
-if 'rerun' not in st.session_state:
-    st.session_state['rerun'] = 0
-else:
-    st.session_state['rerun'] +=1
-st.write(st.session_state['rerun'])
-
 if 'Add a Project' not in st.session_state:
     st.session_state['Add a Project'] = False
 if 'View Projects' not in st.session_state:
@@ -32,8 +25,6 @@ if 'Edit Project' not in st.session_state:
     st.session_state['Edit Project'] = False
 if 'Delete Project' not in st.session_state:
     st.session_state['Delete Project'] = False
-
-
 
 # initalize session state of flags/pop-ups
 if 'Project Submitted' not in st.session_state:
@@ -83,13 +74,11 @@ def reset_project_state():
     st.session_state['Edit Project'] = False
     st.session_state['Delete Project'] = False
 
-
 def update_select_box():
     st.session_state['View Projects'] = False
     st.session_state['Add a Project'] = False
     st.session_state['Edit Project'] = False
     st.session_state['Delete Project'] = False
-
 
 ########################## PAGE HEADER ##########################
 
@@ -100,7 +89,7 @@ def update_select_box():
 
 st.write("### To begin, please select or create a project.")
 
-########################## PROJECT BODY ##########################
+
 # check if any flags need to be set
 # Raise pop ups for flags
 if st.session_state['Project Submitted']:
@@ -119,7 +108,7 @@ if st.session_state['Project Edit Confirm']:
     st.success("Project Edit Successful")
     st.session_state['Project Edit Confirm'] = False
 
-
+########################## PROJECT BODY ##########################
 # if there are no projects we must first add a project
 if not project:
     st.write('You currently have no projects. Click "Add a Project" to Begin.')
@@ -133,32 +122,18 @@ else:
     # this needs to be here, because we can not acces project len earlier
     # we only need to consider this if we have not already selected a gloab project
 
-    # if a project was just added (which sets default_ix to False), we want that to be the default
-    # if not default_ix:
-    #     select_ix = len(project_names) -1
-    # # # elif we have an existing global project, we want that to be the deault value
-    # if st.session_state['Global Project']:
-    #     select_ix = project_names.index(st.session_state['Global Project'])
-    # # otherwise the first value can be the deafult
-    # else:
-    #     select_ix = False
+    # # elif we have an existing global project, we want that to be the deault value
+    # need to make sure the project was not deleted
+    if st.session_state["Global Project"]:
+        select_ix = project_names.index(st.session_state['Global Project'])
+    # otherwise the first value can be the deafult
+    else:
+        select_ix = False
 
-### # TODO:  FIX SELECT BOX DEFAULT LOGIC
     #  select a project dropdown
     # when an option is selected, it becomes the global project
-    # st.write(st.session_state["Global Project"], select_ix)
-    st.session_state
-     # index = select_ix,
-    current_project = st.selectbox(label = "", options = project_names,  label_visibility = "collapsed")
-    st.write(current_project)
-    st.session_state
-    st.session_state['Global Project'] = current_project
-
-    # select_ix = current_project.index(st.session_state['Global Project'])
-    st.write("Made it here")
-    # st.write(st.session_state["Global Project"], select_ix)
-
-
+    # TO DO FIGURE OUT WHY ADDING AN DEAFULT INDEX BREAKS SELECT BOX
+    st.session_state['Global Project'] = st.selectbox(label = "", options = project_names, label_visibility = "collapsed")
 # create column of buttons for project options
 col2, col3, col4  = st.columns(3)
 
@@ -197,18 +172,20 @@ if st.session_state['Add a Project']:
                 q = "INSERT INTO project (project_name) \
                 VALUES ('{project_name}');".format(project_name = new_project_name)
                 ut.execute_query(q, conn)
+                # update the global projects and select box
+                st.session_state["Global Project"] = new_project_name
                 # update session states
                 reset_project_state()
                 st.session_state['Project Submitted'] = True
                 st.experimental_rerun()
 
 elif (st.session_state['Edit Project']) and project:
-    st.warning('You are editing "{project_name}"'.format(project_name = current_project))
+    st.warning('You are editing "{project_name}"'.format(project_name = st.session_state['Global Project']))
     with st.form("projectEditForm"):
         # initalize input sanitization
         valid_entry = True
         reason = ""
-        edit_name = st.text_input("What would you like to rename your project?",value = current_project)
+        edit_name = st.text_input("What would you like to rename your project?",value = st.session_state['Global Project'])
         # Validate edited name
         if edit_name.lower() in [x.lower() for x in project_names]:
             valid = False
@@ -224,32 +201,35 @@ elif (st.session_state['Edit Project']) and project:
             if not valid:
                 st.error(reason)
             else:
-                q = "UPDATE project set project_name = '{new_name}' where project_name = '{current_project}';".format(new_name = edit_name, current_project = current_project)
+                # use update query to db to edit project name
+                q = "UPDATE project set project_name = '{new_name}' where project_name = '{current_project}';".format(new_name = edit_name, current_project = st.session_state['Global Project'])
                 ut.execute_query(q, conn)
+                st.session_state["Global Project"] = edit_name
                 reset_project_state()
                 st.session_state['Project Edit Confirm'] = True
                 st.experimental_rerun()
 
 elif (st.session_state['Delete Project']) and project:
-    # use error message to
-    st.error('Do you wish to delete "{current_project}" ?'.format(current_project = current_project))
-    # c
+    # use error message to confirm that user wants to delete current project selected
+    st.error('Do you wish to delete "{current_project}" ?'.format(current_project = st.session_state['Global Project']))
     space, no, yes, space  = st.columns(4)
     with no:
         no_button = st.button("NO")
     with yes:
         yes_button = st.button("YES (DELETE PROJECT)" )
 
-    # if the users says no, set a
+    # if the users says no, set a flag to display results and rerun
     if no_button:
         reset_project_state()
         st.session_state["Project Delete Cancelled"] = True
         st.experimental_rerun()
     elif yes_button:
-        # TODO: FIX TO HANDLE IF MULTIPLE PROJECTS NAMES ARE THE SAME
-        q = "DELETE FROM project WHERE project_name = '{current_project}';".format(current_project = current_project)
+        # if yes, insert project into db and reset buttons. Set flag to give sucess message
+        q = "DELETE FROM project WHERE project_name = '{current_project}';".format(current_project = st.session_state['Global Project'])
         # st.write(q)
         ut.execute_query(q, conn)
         reset_project_state()
-        st.session_state["Project Delete Confirm"] = True
+        # need to reset global project
+        st.session_state["Global Project"] = False
+        # st.session_state["Project Delete Confirm"] = True
         st.experimental_rerun()

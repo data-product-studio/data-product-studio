@@ -22,9 +22,9 @@ except:
 # initalize session states
 if 'Global Project' not in st.session_state:
     st.session_state['Global Project'] = False
-
 if 'Global Objective' not in st.session_state:
     st.session_state['Global Objective'] = False
+
 
 # Session state allows us to control the state of buttons and warning when page re reruns
 # must initialize them all
@@ -35,6 +35,12 @@ if 'Edit Objective' not in st.session_state:
 if 'Delete Objective' not in st.session_state:
     st.session_state['Delete Objective'] = False
 
+if 'Add a keyResult' not in st.session_state:
+    st.session_state['Add a keyResult'] = False
+if 'Edit keyResult' not in st.session_state:
+    st.session_state['Edit keyResult'] = False
+if 'Delete keyResult' not in st.session_state:
+    st.session_state['Delete keyResult'] = False
 
 # flags to display after a add/edit/delete action is completed
 if 'Objective Submitted' not in st.session_state:
@@ -45,6 +51,9 @@ if "Objective Delete Cancelled" not in st.session_state:
     st.session_state['Objective Delete Cancelled'] = False
 if "Objective Delete Confirm" not in st.session_state:
     st.session_state['Objective Delete Confirm'] = False
+
+if 'Key Result Submitted' not in st.session_state:
+    st.session_state['Key Result Submitted'] = False
 
 # functions to set the state on button Click
 # this alllows use to switch between buttons without saving the state of the other buttons
@@ -71,7 +80,25 @@ def reset_objective_state():
     st.session_state['Delete Objective'] = False
 
 
+def set_key_result_add_button():
+    st.session_state['Add a keyResult'] = not st.session_state['Add a keyResult']
+    st.session_state['Edit keyResult'] = False
+    st.session_state['Delete keyResult'] = False
 
+def set_key_result_edit_button():
+    st.session_state['Add a keyResult'] = False
+    st.session_state['Edit keyResult'] = not st.session_state['Edit keyResult']
+    st.session_state['Delete keyResult'] = False
+
+def set_key_result_delete_button():
+    st.session_state['Add a keyResult'] = False
+    st.session_state['Edit keyResult'] = False
+    st.session_state['Delete keyResult'] = not st.session_state['Delete keyResult']
+
+def reset_key_result_state():
+    st.session_state['Add a keyResult'] = False
+    st.session_state['Edit keyResult'] = False
+    st.session_state['Delete keyResult'] = False
 
 ########################## PAGE HEADER ##########################
 
@@ -206,7 +233,7 @@ if current_project:
             else:
                 valid = True
             # Every form must have a submit button.
-            submitted = st.form_submit_button("Edit Project")
+            submitted = st.form_submit_button("Edit Objective")
             if submitted:
                 if not valid:
                     st.error(reason)
@@ -216,6 +243,7 @@ if current_project:
                     reset_objective_state()
                     st.session_state['Objective Edit Confirm'] = True
                     st.experimental_rerun()
+    # delete button is clicked
     elif (st.session_state["Delete Objective"]) and objectives:
             # use error message to confirm delte
             st.error('Do you wish to delete "{current_objective}" ?'.format(current_objective = current_objective))
@@ -224,7 +252,7 @@ if current_project:
             with no:
                 no_button = st.button("NO")
             with yes:
-                yes_button = st.button("YES (DELETE PROJECT)" )
+                yes_button = st.button("YES (DELETE OBJECTIVE)" )
 
             # if the users says no, set a
             if no_button:
@@ -240,19 +268,67 @@ if current_project:
                 st.session_state["Objective Delete Confirm"] = True
                 st.experimental_rerun()
 
-st.markdown("""---""")
-# reset_objective_state() ##I put this here randomly because otherwise if you hit add objective and then try to reset, it keeps evaluating to true
 ########################## KEY RESULT BODY ##########################
-
-## To DoL
+## Check if there is an existing objective
 if current_project and st.session_state['Global Objective']:
-    # st.session_state['Global Objective']
-    q = "select objective_id from objective where objective_name = '{}'".format(st.session_state['Global Objective'])
-    current_objective_id = ut.exectute_query_with_results(q, conn)[0][0]
-    q = """SELECT * FROM keyResult k JOIN objective o
-            ON k.objective_id = o.objective_id
-            WHERE k.objective_id = {oid}""".format(oid = current_objective_id)
+    # check that one of the above buttons is not clicked
+    if (not st.session_state['Edit Objective']) and (not st.session_state['Add an Objective']) and (not st.session_state['Delete Objective']):
+        st.markdown("""---""")
+        q = "select objective_id from objective where objective_name = '{}'".format(st.session_state['Global Objective'])
+        current_objective_id = ut.exectute_query_with_results(q, conn)[0][0]
+        q = """SELECT * FROM keyResult k JOIN objective o
+                ON k.objective_id = o.objective_id
+                WHERE k.objective_id = {oid}""".format(oid = current_objective_id)
 
-    objectives = ut.exectute_query_with_results(q, conn)
+        keyResults = ut.exectute_query_with_results(q, conn)
+        keyResult_names = [x[1] for x in keyResults]
+        keyResult_status = [x[2] for x in keyResults]
+        # if you have any key results, select them in the table
+        if not keyResults:
+            st.write('You have no Key Results for this objective. Click "Add Key Result"')
+        else:
+            st.write(keyResults)
 
-    st.write(objectives)
+        # create add, edit, delete buttons
+        col1, col2, col3  = st.columns(3)
+        with col1:
+            add = st.button('Add Key Result', on_click = set_key_result_add_button)
+        if keyResults:
+            with col2:
+                edit = st.button("Edit Key Result", on_click = set_key_result_edit_button)
+            with col3:
+                delete = st.button("Delete Key Result", on_click = set_key_result_delete_button)
+
+        if st.session_state['Add a keyResult']:
+            with st.form("keyResult_form"):
+                # used to validate user's value
+                # need to add input sanitization
+                valid_entry = True
+                reason = ""
+                # ask user to enter new name
+                new_kr_name = st.text_input("Enter New Key Result")
+                # if we already have existing key results, make sure the new one does not match an existing one
+                if keyResults and (new_kr_name.lower() in [x.lower() for x in keyResult_names]):
+                    valid = True
+                    reason = "Objective already exists for this project"
+                # check that the new name is longet than 10 chars
+                elif len(new_kr_name) < 10:
+                    valid = True
+                    reason = "Objective must be at least 10 characters."
+                else:
+                    valid = True
+                status_opts = ['Not Started', 'In Progress', "On Hold", "Complete"]
+
+                kr_status = st.radio("Select Key Result Status", status_opts)
+                # Every form must have a submit button.
+                submitted = st.form_submit_button("Submit")
+                if submitted:
+                    if not valid:
+                        st.error(reason)
+                    else:
+                        q = "INSERT INTO keyResult (keyresult_definition, keyresult_status, objective_id) \
+                        VALUES ('{}' , '{}', '{}')".format(new_kr_name,kr_status,current_objective_id)
+                        ut.execute_query(q, conn)
+                        reset_key_result_state()
+                        st.session_state['Key Result Submitted'] = True
+                        st.experimental_rerun()

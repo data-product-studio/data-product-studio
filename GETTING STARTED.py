@@ -3,11 +3,11 @@ import streamlit as st
 import utils as ut
 
 ########################## PAGE SET UP ##########################
-try:
-    conn = ut.init_connection("dataStudioPostgres")
-except:
-    st.error("Cannot Connect to Database. Check Connection and Try Again")
-    st.stop()
+# try:
+conn = ut.init_connection("dataStudioPostgres")
+# except:
+#     st.error("Cannot Connect to Database. Check Connection and Try Again")
+#     st.stop()
 
 # set up tables in db if not already existing
 ut.execute_query("data/objective_DDL.sql", conn, f = True)
@@ -17,6 +17,12 @@ project = ut.exectute_query_with_results("SELECT * FROM project", conn)
 
 # Session state allows us to control the state of buttons and warning when page re reruns
 # must initialize them all
+
+if 'rerun' not in st.session_state:
+    st.session_state['rerun'] = 0
+else:
+    st.session_state['rerun'] +=1
+st.write(st.session_state['rerun'])
 
 if 'Add a Project' not in st.session_state:
     st.session_state['Add a Project'] = False
@@ -77,7 +83,13 @@ def reset_project_state():
     st.session_state['Edit Project'] = False
     st.session_state['Delete Project'] = False
 
-default_ix = True
+
+def update_select_box():
+    st.session_state['View Projects'] = False
+    st.session_state['Add a Project'] = False
+    st.session_state['Edit Project'] = False
+    st.session_state['Delete Project'] = False
+
 
 ########################## PAGE HEADER ##########################
 
@@ -93,7 +105,6 @@ st.write("### To begin, please select or create a project.")
 # Raise pop ups for flags
 if st.session_state['Project Submitted']:
     st.success("Project Sucessfully Submitted!")
-    default_ix = False
     st.session_state['Project Submitted'] = False
 
 if st.session_state['Project Delete Cancelled']:
@@ -113,7 +124,6 @@ if st.session_state['Project Edit Confirm']:
 if not project:
     st.write('You currently have no projects. Click "Add a Project" to Begin.')
     st.session_state['Global Project'] = False
-    default
 else:
     # display all projects
     project_names = [x[1] for x in project]
@@ -122,16 +132,31 @@ else:
     # if a project is added, we want that to become the new default select box option
     # this needs to be here, because we can not acces project len earlier
     # we only need to consider this if we have not already selected a gloab project
-    if st.session_state['Global Project']:
 
-    if default_ix:
-        select_ix = 0
-    else:
-        select_ix = len(project_names) -1
-    #  select a project
-    current_project = st.selectbox("", project_names, index = select_ix)
+    # if a project was just added (which sets default_ix to False), we want that to be the default
+    # if not default_ix:
+    #     select_ix = len(project_names) -1
+    # # # elif we have an existing global project, we want that to be the deault value
+    # if st.session_state['Global Project']:
+    #     select_ix = project_names.index(st.session_state['Global Project'])
+    # # otherwise the first value can be the deafult
+    # else:
+    #     select_ix = False
+
+### # TODO:  FIX SELECT BOX DEFAULT LOGIC
+    #  select a project dropdown
+    # when an option is selected, it becomes the global project
+    # st.write(st.session_state["Global Project"], select_ix)
+    st.session_state
+     # index = select_ix,
+    current_project = st.selectbox(label = "", options = project_names,  label_visibility = "collapsed")
+    st.write(current_project)
+    st.session_state
     st.session_state['Global Project'] = current_project
 
+    # select_ix = current_project.index(st.session_state['Global Project'])
+    st.write("Made it here")
+    # st.write(st.session_state["Global Project"], select_ix)
 
 
 # create column of buttons for project options

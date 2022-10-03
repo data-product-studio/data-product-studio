@@ -8,7 +8,9 @@ import psycopg2
 
 # Initialize connection.
 # https://docs.streamlit.io/library/advanced-features/caching#example-1-pass-a-database-connection-around
-@st.cache(allow_output_mutation=True)
+# cannot use cache with streamlit version 1.13
+# TODO Debug caching issue
+# @st.cache(allow_output_mutation=True)
 def init_connection(db):
     return psycopg2.connect(**st.secrets[db])
 
@@ -50,6 +52,7 @@ def exectute_query_with_results(query, conn):
         except Exception as err:
             st.warning(err)
             cur.connection.rollback()
+        # st.write(cur.description)
         return cur.fetchall()
 
 # get the cursor description from a given table, includes column names, datatype
